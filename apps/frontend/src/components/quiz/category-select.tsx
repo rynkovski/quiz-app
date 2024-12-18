@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 
 interface Category {
@@ -26,19 +26,22 @@ export function CategorySelect({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {categories.map((category) => (
-        <Card key={category.id} className="hover:shadow-lg transition-shadow">
+        <Card key={category.id} className="hover:shadow-lg transition-shadow flex flex-col justify-between">
           <CardHeader>
             <CardTitle>{category.name}</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="mb-4">{category.description}</p>
+          </CardContent>
+          <CardFooter>
             <Button 
               className="w-full" 
               onClick={() => onSelect(category.id)}
             >
               Rozpocznij Quiz
             </Button>
-          </CardContent>
+ 
+        </CardFooter>
         </Card>
       ))}
     </div>

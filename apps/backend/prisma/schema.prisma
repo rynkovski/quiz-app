@@ -20,29 +20,28 @@ model Category {
 }
 
 model Question {
-  id           String    @id @default(cuid())
+  id           String       @id @default(cuid())
   question     String
   answers      String[]
   correctAnswer Int
-  category     Category  @relation(fields: [categoryId], references: [id])
+  category     Category    @relation(fields: [categoryId], references: [id])
   categoryId   String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  results      QuizResult[]
+  quizResults  QuizResult[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@map("questions")
 }
 
 model QuizResult {
-  id           String    @id @default(cuid())
-  playerName   String
-  score        Int
-  timeSpent    Int
-  question     Question  @relation(fields: [questionId], references: [id])
+  id           String     @id @default(cuid())
+  question     Question   @relation(fields: [questionId], references: [id])
   questionId   String
   answer       Int
   isCorrect    Boolean
-  createdAt    DateTime  @default(now())
+  score        Int
+  timeSpent    Int
+  createdAt    DateTime   @default(now())
 
   @@map("quiz_results")
 }

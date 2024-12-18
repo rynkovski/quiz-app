@@ -25,12 +25,11 @@ CREATE TABLE "questions" (
 -- CreateTable
 CREATE TABLE "quiz_results" (
     "id" TEXT NOT NULL,
-    "playerName" TEXT NOT NULL,
-    "score" INTEGER NOT NULL,
-    "timeSpent" INTEGER NOT NULL,
     "questionId" TEXT NOT NULL,
     "answer" INTEGER NOT NULL,
     "isCorrect" BOOLEAN NOT NULL,
+    "score" INTEGER NOT NULL,
+    "timeSpent" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "quiz_results_pkey" PRIMARY KEY ("id")
