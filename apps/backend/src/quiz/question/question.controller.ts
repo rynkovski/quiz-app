@@ -1,4 +1,3 @@
-// apps/backend/src/quiz/controllers/question.controller.ts
 import {
   Controller,
   Get,
@@ -11,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { QuestionService } from './question.service';
-
 
 @ApiTags('questions')
 @Controller('questions')

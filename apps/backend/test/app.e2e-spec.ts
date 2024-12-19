@@ -1,4 +1,3 @@
-// apps/backend/test/quiz.e2e-spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
@@ -20,7 +19,6 @@ describe('QuizController (e2e)', () => {
   });
 
   beforeEach(async () => {
-    // Wyczyść bazę danych przed każdym testem
     await prisma.quizResult.deleteMany();
     await prisma.question.deleteMany();
     await prisma.category.deleteMany();

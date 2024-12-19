@@ -1,14 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Konfiguracja CORS
   app.enableCors();
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
-  // Konfiguracja Swagger
   const config = new DocumentBuilder()
     .setTitle('Quiz API')
     .setDescription('API dokumentacja dla aplikacji Quiz')

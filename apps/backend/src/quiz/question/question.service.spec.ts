@@ -1,4 +1,3 @@
-// apps/backend/src/quiz/services/question.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { QuestionService } from './question.service';
 

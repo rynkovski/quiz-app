@@ -1,6 +1,4 @@
-// apps/backend/src/quiz/quiz.service.ts
 import { Injectable } from '@nestjs/common';
-
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'prisma/prisma.service';
 

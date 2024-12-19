@@ -1,4 +1,3 @@
-// apps/backend/src/quiz/controllers/category.controller.ts
 import {
   Controller,
   Get,
@@ -8,7 +7,12 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  CreateCategoryDto,
+  UpdateCategoryDto,
+  CategoryResponseDto,
+} from '../dto/category.dto';
 import { CategoryService } from './category.service';
 
 @ApiTags('categories')
@@ -16,35 +20,40 @@ import { CategoryService } from './category.service';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Post()
+  @ApiOperation({ summary: 'Create category' })
+  @ApiResponse({ status: 201, type: CategoryResponseDto })
+  create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoryService.create(createCategoryDto);
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all categories' })
+  @ApiResponse({ status: 200, type: [CategoryResponseDto] })
   findAll() {
     return this.categoryService.findAll();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get category by id' })
+  @ApiResponse({ status: 200, type: CategoryResponseDto })
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(id);
   }
 
-  @Post()
-  @ApiOperation({ summary: 'Create category' })
-  create(@Body() createCategoryDto: { name: string; description: string }) {
-    return this.categoryService.create(createCategoryDto);
-  }
-
   @Put(':id')
   @ApiOperation({ summary: 'Update category' })
+  @ApiResponse({ status: 200, type: CategoryResponseDto })
   update(
     @Param('id') id: string,
-    @Body() updateCategoryDto: { name?: string; description?: string },
+    @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
     return this.categoryService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete category' })
+  @ApiResponse({ status: 200, type: CategoryResponseDto })
   remove(@Param('id') id: string) {
     return this.categoryService.remove(id);
   }

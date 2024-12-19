@@ -8,10 +8,10 @@ export class QuizController {
   constructor(private readonly quizService: QuizService) {}
 
   @Post('check-answer')
-  @ApiOperation({ summary: 'Sprawdź odpowiedź' })
+  @ApiOperation({ summary: 'Check answer' })
   @ApiResponse({
     status: 200,
-    description: 'Wynik odpowiedzi',
+    description: 'Result',
     type: Boolean,
   })
   checkAnswer(

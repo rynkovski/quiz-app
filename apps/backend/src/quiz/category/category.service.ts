@@ -1,4 +1,3 @@
-// apps/backend/src/quiz/services/category.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 
