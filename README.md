@@ -36,6 +36,22 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 - Prisma ORM for database access
 - API-first backend design
 
+## Screenshots
+
+![Landing Page](/public/Quiz App.jpeg)
+![Category select](/public/Quiz App 2.jpeg )
+![Quiz start](/public/Quiz App 3.jpeg )
+
+## Roadmap
+
+- [ ] Add CUser System & Authentication
+- [ ] Add Enhanced Quiz Features
+- [ ] Add Performance optimization
+- [ ] Add Dark/light mode
+- [ ] Redesign
+
+
+
 ## Setup & Development
 
 ### Prerequisites
