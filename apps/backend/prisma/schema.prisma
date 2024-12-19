@@ -1,12 +1,4 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
+// apps/backend/prisma/schema.prisma
 model Category {
   id          String    @id @default(cuid())
   name        String
@@ -19,28 +11,28 @@ model Category {
 }
 
 model Question {
-  id           String       @id @default(cuid())
+  id           String    @id @default(cuid())
   question     String
   answers      String[]
   correctAnswer Int
-  category     Category    @relation(fields: [categoryId], references: [id])
+  category     Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId   String
   quizResults  QuizResult[]
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   @@map("questions")
 }
 
 model QuizResult {
-  id           String     @id @default(cuid())
-  question     Question   @relation(fields: [questionId], references: [id])
+  id           String    @id @default(cuid())
+  question     Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId   String
   answer       Int
   isCorrect    Boolean
   score        Int
   timeSpent    Int
-  createdAt    DateTime   @default(now())
+  createdAt    DateTime  @default(now())
 
   @@map("quiz_results")
 }
