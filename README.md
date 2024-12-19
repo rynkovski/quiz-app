@@ -39,7 +39,7 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 ## Screenshots
 
 ![Landing Page](<apps/frontend/public/Quiz App.jpeg>)
-![Category select](<apps/frontend/public/Quiz App.jpeg>)
+![Category select](<apps/frontend/public/Quiz App 2.jpeg>)
 ![Quiz start](<apps/frontend/public/Quiz App 3.jpeg>)
 
 ## Roadmap
