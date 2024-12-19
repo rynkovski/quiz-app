@@ -1,37 +1,41 @@
-// apps/frontend/src/components/questions/QuestionForm.tsx
 'use client'
 
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Question, Category } from '@/types/quiz';
+} from '@/components/ui/select'
+import { Question, Category } from '@/types/quiz'
 
 interface QuestionFormProps {
-  initialData?: Question;
-  categories: Category[];
-  onSubmit: (data: Omit<Question, 'id'>) => void;
-  onCancel: () => void;
+  initialData?: Question
+  categories: Category[]
+  onSubmit: (data: Omit<Question, 'id'>) => void
+  onCancel: () => void
 }
 
-export function QuestionForm({ initialData, categories, onSubmit, onCancel }: QuestionFormProps) {
+export function QuestionForm({
+  initialData,
+  categories,
+  onSubmit,
+  onCancel,
+}: QuestionFormProps) {
   const [formData, setFormData] = useState({
     question: initialData?.question || '',
     answers: initialData?.answers || ['', '', '', ''],
     correctAnswer: initialData?.correctAnswer || 0,
     categoryId: initialData?.categoryId || '',
-  });
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+    e.preventDefault()
+    onSubmit(formData)
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -39,7 +43,9 @@ export function QuestionForm({ initialData, categories, onSubmit, onCancel }: Qu
         <label className="text-sm font-medium">Question</label>
         <Input
           value={formData.question}
-          onChange={(e) => setFormData({ ...formData, question: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, question: e.target.value })
+          }
           required
         />
       </div>
@@ -51,9 +57,9 @@ export function QuestionForm({ initialData, categories, onSubmit, onCancel }: Qu
             <Input
               value={answer}
               onChange={(e) => {
-                const newAnswers = [...formData.answers];
-                newAnswers[index] = e.target.value;
-                setFormData({ ...formData, answers: newAnswers });
+                const newAnswers = [...formData.answers]
+                newAnswers[index] = e.target.value
+                setFormData({ ...formData, answers: newAnswers })
               }}
               placeholder={`Answer ${index + 1}`}
               required
@@ -74,7 +80,9 @@ export function QuestionForm({ initialData, categories, onSubmit, onCancel }: Qu
         <label className="text-sm font-medium">Category</label>
         <Select
           value={formData.categoryId}
-          onValueChange={(value) => setFormData({ ...formData, categoryId: value })}
+          onValueChange={(value) =>
+            setFormData({ ...formData, categoryId: value })
+          }
         >
           <SelectTrigger>
             <SelectValue placeholder="Select category" />
@@ -90,13 +98,11 @@ export function QuestionForm({ initialData, categories, onSubmit, onCancel }: Qu
       </div>
 
       <div className="flex space-x-2">
-        <Button type="submit">
-          {initialData ? 'Update' : 'Create'}
-        </Button>
+        <Button type="submit">{initialData ? 'Update' : 'Create'}</Button>
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
       </div>
     </form>
-  );
+  )
 }

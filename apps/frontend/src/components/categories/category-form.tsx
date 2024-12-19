@@ -1,27 +1,30 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
 
-
-import { Category } from '@/types/quiz';
-import { Textarea } from '../ui/textarea';
-import { Input } from '../ui/input';
+import { Category } from '@/types/quiz'
+import { Textarea } from '../ui/textarea'
+import { Input } from '../ui/input'
 
 interface CategoryFormProps {
-  initialData?: Category;
-  onSubmit: (data: { name: string; description: string }) => void;
-  onCancel: () => void;
+  initialData?: Category
+  onSubmit: (data: { name: string; description: string }) => void
+  onCancel?: () => void
 }
 
-export function CategoryForm({ initialData, onSubmit, onCancel }: CategoryFormProps) {
+export function CategoryForm({
+  initialData,
+  onSubmit,
+  onCancel,
+}: CategoryFormProps) {
   const [formData, setFormData] = useState({
     name: initialData?.name || '',
     description: initialData?.description || '',
-  });
+  })
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
+    e.preventDefault()
+    onSubmit(formData)
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -38,18 +41,19 @@ export function CategoryForm({ initialData, onSubmit, onCancel }: CategoryFormPr
         <label className="text-sm font-medium">Description</label>
         <Textarea
           value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, description: e.target.value })
+          }
           required
         />
       </div>
 
       <div className="flex space-x-2">
-        <Button type="submit">
-          {initialData ? 'Update' : 'Create'}
-        </Button>
+        <Button type="submit">{initialData ? 'Update' : 'Create'}</Button>
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
         </Button>
       </div>
     </form>
-  )}
+  )
+}

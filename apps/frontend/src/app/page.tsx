@@ -1,46 +1,34 @@
-// apps/frontend/src/app/page.tsx
-'use client'
+import { Brain, Globe2, Rocket } from 'lucide-react'
+import HeroSection from './_components/sections/hero-sections'
+import CtaSection from './_components/sections/cta-section'
+import FeaturesSection from './_components/sections/features-section'
 
-import { useState } from 'react'
+const features = [
+  {
+    icon: <Brain className="h-6 w-6 text-indigo-600" />,
+    title: 'Test Your Knowledge',
+    description:
+      'Challenge yourself with a wide range of topics and difficulty levels.',
+  },
+  {
+    icon: <Rocket className="h-6 w-6 text-indigo-600" />,
+    title: 'Learn and Improve',
+    description:
+      'Gain insights and expand your understanding with each quiz you take.',
+  },
+  {
+    icon: <Globe2 className="h-6 w-6 text-indigo-600" />,
+    title: 'Diverse Categories',
+    description: 'Explore quizzes in history, geography, science, and more.',
+  },
+]
 
-
-import { Button } from '@/components/ui/button'
-import { CategoryList } from '@/components/categories/category-list'
-import { QuestionList } from '@/components/questions/questions-list'
-import { Quiz } from '@/components/quiz/quiz'
-
-export default function Home() {
-  const [mode, setMode] = useState<'categories' | 'questions' | 'quiz'>('categories')
-
+export default function LandingPage() {
   return (
-    <main className="container mx-auto p-4">
-      <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold mb-4">Quiz App</h1>
-        <div className="flex justify-center space-x-4">
-          <Button
-            variant={mode === 'categories' ? 'default' : 'outline'}
-            onClick={() => setMode('categories')}
-          >
-            Categories
-          </Button>
-          <Button
-            variant={mode === 'questions' ? 'default' : 'outline'}
-            onClick={() => setMode('questions')}
-          >
-            Questions
-          </Button>
-          <Button
-            variant={mode === 'quiz' ? 'default' : 'outline'}
-            onClick={() => setMode('quiz')}
-          >
-            Take Quiz
-          </Button>
-        </div>
-      </div>
-
-      {mode === 'categories' && <CategoryList />}
-      {mode === 'questions' && <QuestionList />}
-      {mode === 'quiz' && <Quiz/>}
+    <main>
+      <HeroSection />
+      <FeaturesSection features={features} />
+      <CtaSection />
     </main>
   )
 }

@@ -1,101 +1,90 @@
-// apps/frontend/src/components/questions/QuestionList.tsx
 'use client'
 
-import { useState, useEffect } from 'react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react'
+import { Card, CardHeader, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select'
 
-import { Question, Category } from '@/types/quiz';
-import { quizApi } from '@/api/quiz';
-import { QuestionForm } from './questions-form';
-
-
-
+import { Question, Category } from '@/types/quiz'
+import { quizApi } from '@/api/quiz'
+import { QuestionForm } from './questions-form'
 
 export function QuestionList() {
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
-  const [isAddingNew, setIsAddingNew] = useState(false);
+  const [questions, setQuestions] = useState<Question[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
+  const [editingQuestion, setEditingQuestion] = useState<Question | null>(null)
+  const [isAddingNew, setIsAddingNew] = useState(false)
 
-
-  // Dodaj te metody do QuestionList.tsx
-const handleCreate = async (data: Omit<Question, 'id'>) => {
-  try {
-    await quizApi.createQuestion(data);
-    setIsAddingNew(false);
-    loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined);
-  } catch (error) {
-    console.error('Failed to create question:', error);
+  const handleCreate = async (data: Omit<Question, 'id'>) => {
+    try {
+      await quizApi.createQuestion(data)
+      setIsAddingNew(false)
+      loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined)
+    } catch (error) {
+      console.error('Failed to create question:', error)
+    }
   }
-};
 
-const handleUpdate = async (id: string, data: Partial<Question>) => {
-  try {
-    await quizApi.updateQuestion(id, data);
-    setEditingQuestion(null);
-    loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined);
-  } catch (error) {
-    console.error('Failed to update question:', error);
+  const handleUpdate = async (id: string, data: Partial<Question>) => {
+    try {
+      await quizApi.updateQuestion(id, data)
+      setEditingQuestion(null)
+      loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined)
+    } catch (error) {
+      console.error('Failed to update question:', error)
+    }
   }
-};
 
-const handleDelete = async (id: string) => {
-  if (!confirm('Are you sure you want to delete this question?')) return;
-  try {
-    await quizApi.deleteQuestion(id);
-    loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined);
-  } catch (error) {
-    console.error('Failed to delete question:', error);
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this question?')) return
+    try {
+      await quizApi.deleteQuestion(id)
+      loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined)
+    } catch (error) {
+      console.error('Failed to delete question:', error)
+    }
   }
-};
-
-// Dodaj to do JSX w QuestionList.tsx tuż przed zamykającym </div>
 
   useEffect(() => {
-    loadCategories();
-    loadQuestions();
-  }, []);
+    loadCategories()
+    loadQuestions()
+  }, [])
 
   useEffect(() => {
-    loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined);
-  }, [selectedCategory]);
+    loadQuestions(selectedCategory !== 'all' ? selectedCategory : undefined)
+  }, [selectedCategory])
 
   const loadCategories = async () => {
     try {
-      const data = await quizApi.getCategories();
-      setCategories(data);
+      const data = await quizApi.getCategories()
+      setCategories(data)
     } catch (error) {
-      console.error('Failed to load categories:', error);
+      console.error('Failed to load categories:', error)
     }
-  };
+  }
 
   const loadQuestions = async (categoryId?: string) => {
     try {
-      const data = await quizApi.getQuestions(categoryId);
-      setQuestions(data);
+      const data = await quizApi.getQuestions(categoryId)
+      setQuestions(data)
     } catch (error) {
-      console.error('Failed to load questions:', error);
+      console.error('Failed to load questions:', error)
     }
-  };
+  }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-w-7xl mx-auto">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Questions</h2>
         <div className="flex space-x-4">
-          <Select
-            value={selectedCategory}
-            onValueChange={setSelectedCategory}
-          >
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
@@ -157,29 +146,29 @@ const handleDelete = async (id: string) => {
         ))}
       </div>
       {(isAddingNew || editingQuestion) && (
-  <Card className="mt-4">
-    <CardHeader>
-      <h3 className="text-lg font-semibold">
-        {editingQuestion ? 'Edit Question' : 'Add New Question'}
-      </h3>
-    </CardHeader>
-    <CardContent>
-      <QuestionForm
-        initialData={editingQuestion || undefined}
-        categories={categories}
-        onSubmit={(data) => 
-          editingQuestion 
-            ? handleUpdate(editingQuestion.id, data)
-            : handleCreate(data)
-        }
-        onCancel={() => {
-          setEditingQuestion(null);
-          setIsAddingNew(false);
-        }}
-      />
-    </CardContent>
-  </Card>
-)}
+        <Card className="mt-4">
+          <CardHeader>
+            <h3 className="text-lg font-semibold">
+              {editingQuestion ? 'Edit Question' : 'Add New Question'}
+            </h3>
+          </CardHeader>
+          <CardContent>
+            <QuestionForm
+              initialData={editingQuestion || undefined}
+              categories={categories}
+              onSubmit={(data) =>
+                editingQuestion
+                  ? handleUpdate(editingQuestion.id, data)
+                  : handleCreate(data)
+              }
+              onCancel={() => {
+                setEditingQuestion(null)
+                setIsAddingNew(false)
+              }}
+            />
+          </CardContent>
+        </Card>
+      )}
     </div>
-  );
+  )
 }

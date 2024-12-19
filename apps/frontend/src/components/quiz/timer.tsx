@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Progress } from "@/components/ui/progress"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Progress } from '@/components/ui/progress'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 
 export function Timer({
   duration,
-  onTimeUp
+  onTimeUp,
 }: {
   duration: number
   onTimeUp: () => void
@@ -19,7 +19,7 @@ export function Timer({
     }
 
     const timer = setInterval(() => {
-      setTimeLeft(prev => prev - 1)
+      setTimeLeft((prev) => prev - 1)
     }, 1000)
 
     return () => clearInterval(timer)
@@ -30,7 +30,7 @@ export function Timer({
       {timeLeft <= 10 && (
         <Alert variant="destructive">
           <AlertDescription>
-            Pospiesz się! Zostało tylko {timeLeft} sekund!
+            Hurry up! Only {timeLeft} seconds left!
           </AlertDescription>
         </Alert>
       )}

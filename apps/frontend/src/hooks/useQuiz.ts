@@ -27,7 +27,6 @@ export const useQuiz = () => {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  // Pobierz kategorie przy pierwszym renderowaniu
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -35,7 +34,7 @@ export const useQuiz = () => {
         const data = await quizApi.getCategories()
         setCategories(data)
       } catch (err) {
-        setError('Nie udało się pobrać kategorii' + err)
+        setError('Failed to load category' + err)
       } finally {
         setLoading(false)
       }
@@ -52,7 +51,7 @@ export const useQuiz = () => {
       setCurrentQuestion(0)
       setState('question')
     } catch (err) {
-      setError('Nie udało się pobrać pytań' + err)
+      setError('Failed to load questions' + err)
       setState('category')
     }
   }
@@ -65,24 +64,25 @@ export const useQuiz = () => {
       )
 
       if (isCorrect) {
-        setScore(prev => prev + 100)
-        setCorrectAnswers(prev => prev + 1)
+        setScore((prev) => prev + 100)
+        setCorrectAnswers((prev) => prev + 1)
       }
 
       if (currentQuestion + 1 < questions.length) {
-        setCurrentQuestion(prev => prev + 1)
+        setCurrentQuestion((prev) => prev + 1)
       } else {
         setState('results')
       }
-    } catch (err) {
-      setError('Nie udało się sprawdzić odpowiedzi' + err)
+    } catch (error) {
+      console.error('Error checking answer:', error)
+      setError('Error checking answer' + error)
     }
   }
 
   const handleTimeUp = () => {
-    setTimeSpent(prev => prev + 30)
+    setTimeSpent((prev) => prev + 30)
     if (currentQuestion + 1 < questions.length) {
-      setCurrentQuestion(prev => prev + 1)
+      setCurrentQuestion((prev) => prev + 1)
     } else {
       setState('results')
     }

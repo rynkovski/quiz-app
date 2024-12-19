@@ -1,9 +1,9 @@
-// apps/frontend/src/components/quiz/QuizQuestion.tsx
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
+'use client'
+import { useState, useEffect } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
 
 interface Question {
   id: string
@@ -17,23 +17,26 @@ export function QuizQuestion({
   totalQuestions,
   currentQuestion,
   onAnswer,
+  onTimeUp,
   timeLeft: initialTimeLeft = 30,
-  onTimeUp
 }: {
   question: Question
   totalQuestions: number
   currentQuestion: number
   onAnswer: (answerIndex: number) => void
-  timeLeft?: number
   onTimeUp: () => void
+  timeLeft?: number
 }) {
   const [selected, setSelected] = useState<number>(-1)
   const [timeLeft, setTimeLeft] = useState(initialTimeLeft)
   const progress = (currentQuestion / totalQuestions) * 100
 
   useEffect(() => {
+    setTimeLeft(initialTimeLeft)
+    setSelected(-1)
+
     const timer = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer)
           onTimeUp()
@@ -44,24 +47,22 @@ export function QuizQuestion({
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [onTimeUp])
+  }, [question.id, initialTimeLeft, onTimeUp])
 
-  // Reset timer and selected answer when question changes
-  useEffect(() => {
-    setTimeLeft(initialTimeLeft)
-    setSelected(-1)
-  }, [question, initialTimeLeft])
+  const handleSubmit = () => {
+    if (selected >= 0) {
+      onAnswer(selected)
+    }
+  }
 
   return (
     <Card className="max-w-2xl mx-auto">
       <CardHeader>
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm text-muted-foreground">
-            Pytanie {currentQuestion} z {totalQuestions}
+            Question {currentQuestion} of {totalQuestions}
           </span>
-          <span className="text-sm font-medium">
-            Czas: {timeLeft}s
-          </span>
+          <span className="text-sm font-medium">Time left: {timeLeft}s</span>
         </div>
         <Progress value={progress} className="mb-2" />
         <CardTitle>{question.question}</CardTitle>
@@ -75,8 +76,8 @@ export function QuizQuestion({
           {question.answers.map((answer, index) => (
             <div key={index} className="flex items-center space-x-2">
               <RadioGroupItem value={index.toString()} id={`answer-${index}`} />
-              <label 
-                htmlFor={`answer-${index}`} 
+              <label
+                htmlFor={`answer-${index}`}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 {answer}
@@ -84,12 +85,12 @@ export function QuizQuestion({
             </div>
           ))}
         </RadioGroup>
-        <Button 
-          className="w-full mt-6" 
-          onClick={() => selected >= 0 && onAnswer(selected)}
+        <Button
+          className="w-full mt-6"
+          onClick={handleSubmit}
           disabled={selected < 0}
         >
-          Następne pytanie
+          Next question
         </Button>
       </CardContent>
     </Card>
