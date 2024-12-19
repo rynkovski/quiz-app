@@ -44,7 +44,8 @@ Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ## Roadmap
 
-- [ ] Add CUser System & Authentication
+- [ ] Add Toast notifications
+- [ ] Add User System & Authentication
 - [ ] Add Enhanced Quiz Features
 - [ ] Add Performance optimization
 - [ ] Add Dark/light mode
